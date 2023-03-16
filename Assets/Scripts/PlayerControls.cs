@@ -8,6 +8,7 @@ public class PlayerControls : MonoBehaviour
     Vector2 moveVector;
     PlayerInput input;
     Rigidbody2D rBody;
+    public bool canJump;
     [SerializeField] float lrSpeed;
     [SerializeField] float jumpSpeed;
     // Start is called before the first frame update
@@ -25,14 +26,23 @@ public class PlayerControls : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if(context.action.WasPerformedThisFrame())
+        if (context.action.WasPerformedThisFrame() && canJump)
         {
             rBody.AddForce(jumpSpeed * Vector2.up, ForceMode2D.Impulse);
+            canJump = false;
         }
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
         moveVector = context.ReadValue<Vector2>();
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Stage" && rBody.velocity.y == 0)
+        {
+            canJump = true;
+        }
     }
 }
