@@ -21,7 +21,8 @@ public class PlayerControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rBody.AddForce(lrSpeed * moveVector, ForceMode2D.Force);
+        //rBody.AddForce(lrSpeed * moveVector, ForceMode2D.Force);
+        rBody.velocity = new Vector2((lrSpeed * moveVector.x), rBody.velocity.y);
     }
 
     public void OnJump(InputAction.CallbackContext context)

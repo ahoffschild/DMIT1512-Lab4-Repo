@@ -15,4 +15,26 @@ public class PlayerController : MonoBehaviour
     {
         
     }
+
+    private void onTriggerEnter2D(Collider2D collision)
+    {
+        if (collision != null && collision.GetComponent<ICollectable>() != null)
+        {
+            ICollectable collectable = collision.GetComponent<ICollectable>();
+            switch (collectable.Type)
+            {
+                case CollectableType.None:
+                    break;
+                case CollectableType.Money:
+                    collectable.Collect();
+                    break;
+                case CollectableType.Key:
+                    break;
+                case CollectableType.Gem:
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }
