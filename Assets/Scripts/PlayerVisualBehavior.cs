@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerVisualBehavior : MonoBehaviour
 {
     [SerializeField] PlayerControls playerControls;
-    SpriteRenderer renderer;
+    new SpriteRenderer renderer;
     Animator animator;
     PlayerAnimationState animationState;
     // Start is called before the first frame update
@@ -24,7 +24,12 @@ public class PlayerVisualBehavior : MonoBehaviour
         {
             RunningCheck();
         }
+        else
+        {
+            AirCheck();
+        }
         UpdateAnim();
+        Debug.Log(animationState);
     }
 
     void Sideflip()
@@ -51,6 +56,18 @@ public class PlayerVisualBehavior : MonoBehaviour
         }
     }
 
+    void AirCheck()
+    {
+        if (playerControls.rBody.velocity.y > -1 && !playerControls.canJump)
+        {
+            animationState = PlayerAnimationState.Jump;
+        }
+        else
+        {
+            animationState = PlayerAnimationState.Airborne;
+        }
+    }
+
     void UpdateAnim()
     {
         switch(animationState)
@@ -60,6 +77,12 @@ public class PlayerVisualBehavior : MonoBehaviour
                 break;
             case (PlayerAnimationState.Walking):
                 animator.SetInteger("SelectAnim", 1);
+                break;
+            case (PlayerAnimationState.Jump):
+                animator.SetInteger("SelectAnim", 2);
+                break;
+            case (PlayerAnimationState.Airborne):
+                animator.SetInteger("SelectAnim", 3);
                 break;
             default:
                 animator.SetInteger("SelectAnim", 0);

@@ -24,16 +24,22 @@ public class PlayerControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rBody.AddForce(lrSpeed * moveVector, ForceMode2D.Force);
-        if (rBody.velocity.x > speedCap)
+        if (moveVector.x != 0)
         {
-            rBody.velocity = new Vector2(speedCap, rBody.velocity.y);
+            rBody.AddForce(lrSpeed * moveVector, ForceMode2D.Force);
         }
-        if (rBody.velocity.x < -1 * speedCap)
+        //If not pressed, decelerates faster
+        /*
+        else
         {
-            rBody.velocity = new Vector2(-1 * speedCap, rBody.velocity.y);
+            rBody.velocity = new Vector2(rBody.velocity.x * 0.99f, rBody.velocity.y);
         }
-        Debug.Log(rBody.velocity.x);
+        */
+
+        if (Mathf.Abs(rBody.velocity.x) > speedCap)
+        {
+            rBody.velocity = new Vector2(rBody.velocity.normalized.x * speedCap, rBody.velocity.y);
+        }
     }
 
     public void OnJump(InputAction.CallbackContext context)
