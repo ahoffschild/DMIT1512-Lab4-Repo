@@ -9,7 +9,10 @@ public class PlayerControls : MonoBehaviour
     public Rigidbody2D rBody;
     public bool canJump;
     public bool justJumped;
+    private bool alreadyJumped;
     private int jumpOff;
+    //[SerializeField] CapsuleCollider2D mainCollider;
+    [SerializeField] Collider2D groundCheck;
     [SerializeField] float lrSpeed;
     [SerializeField] float speedCap;
     [SerializeField] float jumpSpeed;
@@ -19,6 +22,7 @@ public class PlayerControls : MonoBehaviour
         rBody = GetComponent<Rigidbody2D>();
         moveVector = Vector2.zero;
         jumpOff = 1;
+        //Physics2D.IgnoreCollision(groundCheck, mainCollider);
     }
 
     //TODO: Update 
@@ -26,7 +30,7 @@ public class PlayerControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        JumpOff();
+        JumpChecks();
         if (moveVector.x != 0)
         {
             rBody.AddForce(lrSpeed * moveVector, ForceMode2D.Force);
@@ -61,13 +65,21 @@ public class PlayerControls : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Stage" && Mathf.Abs(rBody.velocity.y) < 0.1)
-        {
-            canJump = true;
-        }
-    }
+		//if (collision.gameObject.tag == "Stage" && collision.otherCollider == groundCheck && Mathf.Abs(rBody.velocity.y) < 0.1)
+		//{
+		//	canJump = true;
+		//}
+	}
 
-    public void JumpOff()
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+		if (collision.gameObject.tag == "Stage" && Mathf.Abs(rBody.velocity.y) < 0.1)
+		{
+			canJump = true;
+		}
+	}
+
+    public void JumpChecks()
     {
         if (justJumped == true)
         {

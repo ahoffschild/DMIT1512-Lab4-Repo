@@ -21,6 +21,7 @@ public class CameraTagBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(mainCamera.orthographicSize);
         if (transition)
         {
             CameraTransition();
@@ -29,19 +30,19 @@ public class CameraTagBehavior : MonoBehaviour
 
     void CameraTransition()
     {
-        if (internalTimer >= transitionTime)
+		internalTimer++;
+		mainCamera.orthographicSize = oldSize + increase * ((float)internalTimer / (float)transitionTime);
+		if (internalTimer >= transitionTime)
         {
             mainCamera.orthographicSize = newSize;
             internalTimer = 0;
+            transition = false;
         }
-        mainCamera.orthographicSize = oldSize + (float)(internalTimer / transitionTime);
-        internalTimer++;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Aeiou");
-        if (!transition)
+        if (!transition && newSize != mainCamera.orthographicSize)
         {
             oldSize = mainCamera.orthographicSize;
             increase = newSize - oldSize;
