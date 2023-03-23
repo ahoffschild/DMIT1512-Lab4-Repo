@@ -26,10 +26,9 @@ public class PlayerVisualBehavior : MonoBehaviour
         }
         else
         {
-            AirCheck();
+            //AirCheck();
         }
         UpdateAnim();
-        Debug.Log(animationState);
     }
 
     void Sideflip()
