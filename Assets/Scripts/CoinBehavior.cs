@@ -10,7 +10,7 @@ public class CoinBehavior : MonoBehaviour, ICollectable
 
     public int Collect()
     {
-        spriteRenderer.enabled = false;
+        spriteRenderer.color = new Color(1, 1, 1, 0.3f);
         return Value;
     }
 
