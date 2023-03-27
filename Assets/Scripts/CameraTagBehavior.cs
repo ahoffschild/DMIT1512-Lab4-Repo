@@ -21,7 +21,6 @@ public class CameraTagBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(mainCamera.orthographicSize);
         if (transition)
         {
             CameraTransition();

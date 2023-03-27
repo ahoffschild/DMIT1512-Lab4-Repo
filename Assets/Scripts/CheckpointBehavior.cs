@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinBehavior : MonoBehaviour, ICollectable
+public class CheckpointBehavior : MonoBehaviour, ICollectable
 {
     public bool Collected = false;
-    public int Value => 5;
-    public CollectableType Type => CollectableType.Money;
+    public int Value => 0;
+    public CollectableType Type => CollectableType.Checkpoint;
     private SpriteRenderer spriteRenderer;
+
+    [SerializeField] int checkpointID;
 
     public int Collect()
     {
@@ -19,7 +21,7 @@ public class CoinBehavior : MonoBehaviour, ICollectable
         {
             spriteRenderer.color = new Color(1, 1, 1, 0.3f);
             Collected = true;
-            return Value;
+            return checkpointID;
         }
     }
 

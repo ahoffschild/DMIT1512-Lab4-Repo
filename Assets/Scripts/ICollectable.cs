@@ -13,6 +13,7 @@ public enum CollectableType
     None = 0,
     Money = 1,
     Key = 2,
-    Gem = 4,
-    Special = Money | Gem,
+    Gem = 3,
+    Checkpoint = 4,
+    Special = 5,
 }
