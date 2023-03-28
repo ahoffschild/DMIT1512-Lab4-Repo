@@ -50,12 +50,13 @@ public class PlayerStatus
     public int checkpoint { get; set; }
     public int level { get; set; }
     public int HP { get; set; }
-
+    public bool[] gems { get; set; }
     public PlayerStatus()
     {
         score = 0;
         checkpoint = 0;
         level = 0;
         HP = 0;
+        gems = new bool[3] { false, false, false };
     }
 }

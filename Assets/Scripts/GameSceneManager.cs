@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviour
 {
+    private PlayerStatus playerStatus;
+
     public void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -16,6 +18,14 @@ public class GameSceneManager : MonoBehaviour
         if(GameObject.FindGameObjectsWithTag("Manager").Length > 1)
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void Update()
+    {
+        if (playerStatus == null)
+        {
+            playerStatus = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehavior>().playerStatus;
         }
     }
 
