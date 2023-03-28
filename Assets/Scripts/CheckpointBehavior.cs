@@ -13,16 +13,9 @@ public class CheckpointBehavior : MonoBehaviour, ICollectable
 
     public int Collect()
     {
-        if (Collected)
-        {
-            return 0;
-        }
-        else
-        {
-            spriteRenderer.color = new Color(1, 1, 1, 0.3f);
-            Collected = true;
-            return checkpointID;
-        }
+        spriteRenderer.color = new Color(1, 1, 1, 0.3f);
+        Collected = true;
+        return checkpointID;
     }
 
     // Start is called before the first frame update

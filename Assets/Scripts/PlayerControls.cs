@@ -6,12 +6,11 @@ using UnityEngine.InputSystem;
 public class PlayerControls : MonoBehaviour
 {
     Vector2 moveVector;
+    public PlayerBehavior playerBehavior;
     public Rigidbody2D rBody;
     public bool canJump;
     public bool justJumped;
-    private bool alreadyJumped;
     private int jumpOff;
-    //[SerializeField] CapsuleCollider2D mainCollider;
     [SerializeField] Collider2D groundCheck;
     [SerializeField] float lrSpeed;
     [SerializeField] float speedCap;
@@ -19,10 +18,10 @@ public class PlayerControls : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerBehavior = GetComponent<PlayerBehavior>();
         rBody = GetComponent<Rigidbody2D>();
         moveVector = Vector2.zero;
         jumpOff = 1;
-        //Physics2D.IgnoreCollision(groundCheck, mainCollider);
     }
 
     //TODO: Update 
@@ -63,6 +62,14 @@ public class PlayerControls : MonoBehaviour
         moveVector = context.ReadValue<Vector2>();
     }
 
+    public void OnReset(InputAction.CallbackContext context)
+    {
+        if (context.action.WasPerformedThisFrame())
+        {
+            CheckpointRespawn();
+        }
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
 		//if (collision.gameObject.tag == "Stage" && collision.otherCollider == groundCheck && Mathf.Abs(rBody.velocity.y) < 0.1)
@@ -93,5 +100,11 @@ public class PlayerControls : MonoBehaviour
                 jumpOff--;
             }
         }
+    }
+
+    public void CheckpointRespawn()
+    {
+        rBody.velocity = Vector2.zero;
+        rBody.position = playerBehavior.currentCheckpoint.transform.position;
     }
 }

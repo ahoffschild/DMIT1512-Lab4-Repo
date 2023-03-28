@@ -5,17 +5,19 @@ using UnityEngine;
 public class PlayerBehavior : MonoBehaviour
 {
     public PlayerStatus playerStatus;
+    public GameObject currentCheckpoint;
     
     // Start is called before the first frame update
     void Start()
     {
         playerStatus = new PlayerStatus();
+        currentCheckpoint = GameObject.Find($"Checkpoint{playerStatus.checkpoint}");
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log(playerStatus.score);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -35,7 +37,11 @@ public class PlayerBehavior : MonoBehaviour
                 case CollectableType.Gem:
                     break;
                 case CollectableType.Checkpoint:
-                    playerStatus.checkpoint = collectable.Collect();
+                    if (!collision.GetComponent<CheckpointBehavior>().Collected)
+                    {
+                        playerStatus.checkpoint = collectable.Collect();
+                        currentCheckpoint = GameObject.Find($"Checkpoint{playerStatus.checkpoint}");
+                    }
                     break;
                 default:
                     break;
