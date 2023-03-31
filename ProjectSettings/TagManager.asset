@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Stage
   - GroundCheck
+  - DeathZone
   layers:
   - Default
   - TransparentFX

@@ -66,7 +66,7 @@ public class PlayerControls : MonoBehaviour
     {
         if (context.action.WasPerformedThisFrame())
         {
-            CheckpointRespawn();
+            playerBehavior.CheckpointRespawn();
         }
     }
 
@@ -100,11 +100,5 @@ public class PlayerControls : MonoBehaviour
                 jumpOff--;
             }
         }
-    }
-
-    public void CheckpointRespawn()
-    {
-        rBody.velocity = Vector2.zero;
-        rBody.position = playerBehavior.currentCheckpoint.transform.position;
     }
 }

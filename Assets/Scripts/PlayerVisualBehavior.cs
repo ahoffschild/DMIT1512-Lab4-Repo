@@ -32,6 +32,10 @@ public class PlayerVisualBehavior : MonoBehaviour
         {
             AirCheck();
         }
+        if (playerControls.playerBehavior.playerInteraction == PlayerInteraction.Dead)
+        {
+            animationState = PlayerAnimationState.Dying;
+        }
         UpdateAnim();
     }
 
@@ -95,6 +99,9 @@ public class PlayerVisualBehavior : MonoBehaviour
                     animator.SetBool("Falling", true);
                 }
                 break;
+            case (PlayerAnimationState.Dying):
+                animator.SetInteger("SelectAnim", 4);
+                break;
             default:
                 animator.SetInteger("SelectAnim", 0);
                 break;
@@ -107,6 +114,7 @@ public class PlayerVisualBehavior : MonoBehaviour
         Idle,
         Walking,
         Jump,
-        Airborne
+        Airborne,
+        Dying
     }
 }
