@@ -28,14 +28,7 @@ public class GameSaveManager : MonoBehaviour
             {
                 save = new PlayerStatus();
                 string jsonSave = sr.ReadToEnd();
-                if (jsonSave != "{}")
-                {
-                    JsonUtility.FromJsonOverwrite(jsonSave, save);
-                }
-                else
-                {
-                    save = null;
-                }
+                JsonUtility.FromJsonOverwrite(jsonSave, save);
             }
         }
         else
@@ -57,11 +50,7 @@ public class GameSaveManager : MonoBehaviour
     {
         if (File.Exists(savePath))
         {
-            string blank = "{}";
-            using (StreamWriter sw = File.CreateText(savePath))
-            {
-                sw.WriteLine(blank);
-            }
+            File.Delete(savePath);
         }
     }
 }

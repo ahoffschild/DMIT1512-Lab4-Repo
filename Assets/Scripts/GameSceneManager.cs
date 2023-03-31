@@ -6,13 +6,21 @@ using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviour
 {
-    private PlayerStatus playerStatus;
+    private PlayerBehavior playerBehavior;
     private GameSaveManager gameSaveManager;
+    public int savedScore;
+    private bool load;
+    private bool carryingScore;
+    public MenuType menuType = MenuType.Normal;
 
     public void Awake()
     {
         DontDestroyOnLoad(gameObject);
         gameSaveManager = GetComponent<GameSaveManager>();
+        savedScore = 0;
+        playerBehavior = null;
+        load = false;
+        carryingScore = false;
     }
 
     private void Start()
@@ -21,21 +29,48 @@ public class GameSceneManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        if (SceneManager.GetActiveScene().buildIndex != 0)
-        {
-            playerStatus = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehavior>().playerStatus;
-        }
     }
 
     private void Update()
     {
+        if (SceneManager.GetActiveScene().buildIndex != 0 && playerBehavior == null)
+        {
+            playerBehavior = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehavior>();
+        }
+        if (load && playerBehavior != null)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehavior>().LoadSave(gameSaveManager.save);
+            load = false;
+        }
+        if (carryingScore && playerBehavior != null)
+        {
+            playerBehavior.playerStatus.score = savedScore;
+            gameSaveManager.save = playerBehavior.playerStatus;
+            gameSaveManager.SaveGame();
+            carryingScore = false;
+        }
     }
 
-    public void LoadMainMenu() => SceneManager.LoadScene(0);
+    public void LoadScene(int sceneIndex)
+    {
+        SceneManager.LoadScene(sceneIndex);
+    }
 
-    public void LoadLevelOne() => SceneManager.LoadScene(1);
+    public void LoadScene(int sceneIndex, bool save)
+    {
+        if (playerBehavior != null && save)
+        {
+            carryingScore = true;
+        }
+        SceneManager.LoadScene(sceneIndex);
+    }
 
-    public void LoadLevelTwo() => SceneManager.LoadScene(2);
+    public void LoadScene(int sceneIndex, MenuType type)
+    {
+        savedScore = playerBehavior.playerStatus.score;
+        SceneManager.LoadScene(sceneIndex);
+        menuType = type;
+    }
 
     public void LoadPlayerSave()
     {
@@ -45,14 +80,21 @@ public class GameSceneManager : MonoBehaviour
             switch (gameSaveManager.save.level)
             {
                 case 1:
-                    LoadLevelOne();
+                    LoadScene(1, false);
                     break;
                 case 2:
-                    LoadLevelTwo();
+                    LoadScene(2, false);
                     break;
                 default:
                     break;
             }
+            load = true;
         }
     }
+}
+
+public enum MenuType
+{
+    Normal,
+    Victory
 }

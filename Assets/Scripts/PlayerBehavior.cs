@@ -22,15 +22,10 @@ public class PlayerBehavior : MonoBehaviour
         playerStatus.level = SceneManager.GetActiveScene().buildIndex;
         playerControls = GetComponent<PlayerControls>();
         currentCheckpoint = GameObject.Find($"Checkpoint{playerStatus.checkpoint}");
-        gameSaveManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameSaveManager>();
         rBody = GetComponent<Rigidbody2D>();
         playerInteraction = PlayerInteraction.Normal;
         internalTimer = 0;
-
-        if (gameSaveManager.save != null)
-        {
-            LoadSave(gameSaveManager.save);
-        }
+        gameSaveManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameSaveManager>();
     }
 
     // Update is called once per frame

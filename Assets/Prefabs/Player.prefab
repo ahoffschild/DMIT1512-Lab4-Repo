@@ -586,3 +586,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCheckpoint: {fileID: 0}
+  rBody: {fileID: 0}
+  playerInteraction: 0
+  deathTime: 250

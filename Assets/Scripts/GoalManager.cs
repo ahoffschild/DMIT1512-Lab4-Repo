@@ -27,7 +27,16 @@ public class GoalManager : MonoBehaviour
     {
         if (context.action.WasPerformedThisFrame())
         {
-            SceneManager.LoadScene(targetIndex);
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<GameSceneManager>().LoadScene(targetIndex, true);
+        }
+    }
+
+    public void GoToMenu(InputAction.CallbackContext context)
+    {
+        if (context.action.WasPerformedThisFrame())
+        {
+            MenuType type = MenuType.Victory;
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<GameSceneManager>().LoadScene(targetIndex, type);
         }
     }
 }
