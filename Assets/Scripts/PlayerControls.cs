@@ -35,7 +35,7 @@ public class PlayerControls : MonoBehaviour
         //If not pressed, decelerates faster
         else
         {
-            rBody.velocity = new Vector2(rBody.velocity.x * 0.99f, rBody.velocity.y);
+            rBody.velocity = new Vector2(rBody.velocity.x * 0.96f, rBody.velocity.y);
         }
 
         if (Mathf.Abs(rBody.velocity.x) > speedCap)

@@ -37868,6 +37868,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 5c14730b76371a24ba71a12d9e814e69, type: 3}
+    - target: {fileID: 8663125039126939168, guid: ddc5ee0f4d67259408b2e8ffd236c1aa, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8663125039126939170, guid: ddc5ee0f4d67259408b2e8ffd236c1aa, type: 3}
       propertyPath: m_Name
       value: Player

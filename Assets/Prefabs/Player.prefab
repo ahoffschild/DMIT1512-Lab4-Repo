@@ -570,7 +570,7 @@ MonoBehaviour:
   canJump: 0
   justJumped: 0
   groundCheck: {fileID: 8663125037481203258}
-  lrSpeed: 40
+  lrSpeed: 100
   speedCap: 7.5
   jumpSpeed: 60
 --- !u!114 &2127897007613915638
