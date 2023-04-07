@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
-  transitionTime: 550
+  transitionTime: 200
   newSize: 8
 --- !u!61 &1625589154952477026
 BoxCollider2D:

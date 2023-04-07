@@ -49,6 +49,7 @@ public class GameSaveManager : MonoBehaviour
         if (File.Exists(savePath))
         {
             File.Delete(savePath);
+            LoadSave();
         }
     }
 }

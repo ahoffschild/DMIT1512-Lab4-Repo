@@ -24,7 +24,7 @@ public class GoalManager : MonoBehaviour
     {
         if (context.action.WasPerformedThisFrame())
         {
-            GameObject.FindGameObjectWithTag("GameController").GetComponent<GameSceneManager>().LoadScene(targetIndex, true);
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<GameSceneManager>().LoadScene(targetIndex);
         }
     }
 

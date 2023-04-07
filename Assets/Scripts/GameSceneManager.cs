@@ -5,9 +5,8 @@ public class GameSceneManager : MonoBehaviour
 {
     private PlayerBehavior playerBehavior;
     private GameSaveManager gameSaveManager;
-    public int savedScore;
+    public int? savedScore;
     private bool load;
-    private bool carryingScore;
     public MenuType menuType = MenuType.Normal;
 
     public void Awake()
@@ -16,8 +15,8 @@ public class GameSceneManager : MonoBehaviour
         gameSaveManager = GetComponent<GameSaveManager>();
         savedScore = 0;
         playerBehavior = null;
+        savedScore = null;
         load = false;
-        carryingScore = false;
     }
 
     private void Start()
@@ -37,28 +36,32 @@ public class GameSceneManager : MonoBehaviour
         if (load && playerBehavior != null)
         {
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehavior>().LoadSave(gameSaveManager.save);
+            Debug.Log(gameSaveManager.save.score);
+            Debug.Log(savedScore);
             load = false;
         }
-        if (carryingScore && playerBehavior != null)
+        if (savedScore != null && playerBehavior != null)
         {
-            playerBehavior.playerStatus.score = savedScore;
-            gameSaveManager.save = playerBehavior.playerStatus;
-            gameSaveManager.SaveGame();
-            carryingScore = false;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehavior>().playerStatus.score = (int)savedScore;
+            savedScore = null;
         }
     }
 
     public void LoadScene(int sceneIndex)
     {
-        SceneManager.LoadScene(sceneIndex);
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            savedScore = playerBehavior.playerStatus.score;
+            SceneManager.LoadScene(sceneIndex);
+        }
+        else
+        {
+            SceneManager.LoadScene(sceneIndex);
+        }
     }
 
-    public void LoadScene(int sceneIndex, bool save)
+    public void LoadSaveScene(int sceneIndex)
     {
-        if (playerBehavior != null && save)
-        {
-            carryingScore = true;
-        }
         SceneManager.LoadScene(sceneIndex);
     }
 
@@ -77,10 +80,10 @@ public class GameSceneManager : MonoBehaviour
             switch (gameSaveManager.save.level)
             {
                 case 1:
-                    LoadScene(1, false);
+                    LoadSaveScene(1);
                     break;
                 case 2:
-                    LoadScene(2, false);
+                    LoadSaveScene(2);
                     break;
                 default:
                     break;

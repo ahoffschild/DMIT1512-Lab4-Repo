@@ -37858,7 +37858,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2127897007613915638, guid: ddc5ee0f4d67259408b2e8ffd236c1aa, type: 3}
       propertyPath: deathTime
-      value: 250
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 8663125037930100352, guid: ddc5ee0f4d67259408b2e8ffd236c1aa, type: 3}
       propertyPath: m_Size.y

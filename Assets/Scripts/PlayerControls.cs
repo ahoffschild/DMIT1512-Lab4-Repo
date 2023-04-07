@@ -12,6 +12,7 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] Collider2D groundCheck;
     [SerializeField] float lrSpeed;
     [SerializeField] float speedCap;
+    [SerializeField] float vSpeedCap;
     [SerializeField] float jumpSpeed;
     // Start is called before the first frame update
     void Start()
@@ -41,6 +42,10 @@ public class PlayerControls : MonoBehaviour
         if (Mathf.Abs(rBody.velocity.x) > speedCap)
         {
             rBody.velocity = new Vector2(rBody.velocity.normalized.x * speedCap, rBody.velocity.y);
+        }
+        if (Mathf.Abs(rBody.velocity.y) > vSpeedCap)
+        {
+            rBody.velocity = new Vector2(rBody.velocity.x, rBody.velocity.normalized.y * vSpeedCap);
         }
     }
 
